@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.promineotech.restaurantManagement.entity.Restaurant;
 import com.promineotech.restaurantManagement.service.RestaurantService;
-
-	//should work once restaurant service is up
-	//defines the endpoints for restaurant
 	
 	@RestController
 	@RequestMapping("/restaurants")
@@ -51,4 +48,3 @@ import com.promineotech.restaurantManagement.service.RestaurantService;
 				}
 			}
 	}
-}
