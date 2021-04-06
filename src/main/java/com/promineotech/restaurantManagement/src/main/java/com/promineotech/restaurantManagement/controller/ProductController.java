@@ -44,7 +44,7 @@ public class ProductController {
 			service.removeProduct(id);
 			return new ResponseEntity<Object>("Successfully delete product with id: " + id, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>("Unable to delte product ", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>("Unable to delete product ", HttpStatus.BAD_REQUEST);
 		}
 	}
 }
