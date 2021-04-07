@@ -36,7 +36,7 @@ private static final Logger logger = LogManager.getLogger(UserService.class);
 	public Review updateReview(Review review, Long id) throws Exception {
 		try {
 			Review oldReview = repo.findOne(id);
-			oldReview.setRest_Id(review.getRest_Id());
+			oldReview.setRest_id(review.getRest_id());
 			oldReview.setReviewDescription(review.getReviewDescription());
 			oldReview.setRating(review.getRating());
 			return repo.save(oldReview);
