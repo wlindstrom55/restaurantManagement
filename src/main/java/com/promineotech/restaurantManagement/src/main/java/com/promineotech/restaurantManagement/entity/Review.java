@@ -11,8 +11,8 @@ import com.promineotech.restaurantManagement.util.Rating;
 public class Review {
 
 	private Long id;
-	private Long rest_Id;
-	private Long user_Id;
+	private Long rest_id;
+	private Long user_id;
 	private String reviewDescription;
 	private Rating rating;
 	
@@ -27,12 +27,12 @@ public class Review {
 		this.id = id;
 	}
 	
-	public Long getRest_Id() {
-		return rest_Id;
+	public Long getRest_id() {
+		return rest_id;
 	}
 	
-	public void setRest_Id(Long rest_Id) {
-		this.rest_Id = rest_Id;
+	public void setRest_id(Long rest_id) {
+		this.rest_id = rest_id;
 	}
 	
 	public String getReviewDescription() {
@@ -43,12 +43,12 @@ public class Review {
 		this.reviewDescription = reviewDescription;
 	}
 	
-	public Long getUser_Id() {
-		return user_Id;
+	public Long getUser_id() {
+		return user_id;
 	}
 	
-	public void setUser_Id(Long user_Id) {
-		this.user_Id = user_Id;
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
 	}
 	
 	public Rating getRating() {
