@@ -41,7 +41,7 @@ public class UserService {
 			return repo.save(oldUser);
 		} catch (Exception e) {
 			logger.error("Exception occurred while trying to update user: " + id, e);
-			throw new Exception("Unable to update customer");
+			throw new Exception("Unable to update user.");
 		}
 	}
 	
@@ -50,7 +50,7 @@ public class UserService {
 			repo.delete(id);
 		} catch (Exception e) {
 			logger.error("Exception occurred while trying to delete user: " + id, e);
-			throw new Exception("Unable to delete customer");
+			throw new Exception("Unable to delete user.");
 		}
 	}
 }
