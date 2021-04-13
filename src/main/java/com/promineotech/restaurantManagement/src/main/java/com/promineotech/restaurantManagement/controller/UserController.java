@@ -1,5 +1,7 @@
 package com.promineotech.restaurantManagement.controller;
 
+import javax.naming.AuthenticationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.promineotech.restaurantManagement.entity.Credentials;
 import com.promineotech.restaurantManagement.entity.User;
+import com.promineotech.restaurantManagement.service.AuthService;
 import com.promineotech.restaurantManagement.service.UserService;
 
 @RestController
