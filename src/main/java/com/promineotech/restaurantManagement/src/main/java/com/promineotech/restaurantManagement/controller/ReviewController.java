@@ -44,7 +44,7 @@ public class ReviewController {
 			service.deleteReview(id);
 			return new ResponseEntity<Object>("Successfully delete review with id: " + id, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>("Unable to delte review ", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>("Unable to delete review ", HttpStatus.BAD_REQUEST);
 		}
 	}
 }
