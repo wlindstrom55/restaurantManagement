@@ -16,8 +16,8 @@ import com.promineotech.restaurantManagement.entity.Product;
 import com.promineotech.restaurantManagement.repository.OrderRepository;
 import com.promineotech.restaurantManagement.repository.ProductRepository;
 import com.promineotech.restaurantManagement.service.OrderService;
-import com.promineotech.restaurantManagement.util.MembershipLevel;
-import com.promineotech.restaurantManagement.util.OrderStatus; //these two are yet to be implemented..
+import com.promineotech.restaurantManagement.util.Level;
+import com.promineotech.restaurantManagement.util.OrderStatus;
 import com.promineotech.restaurantManagement.repository.UserRepository;
 
 @Service
@@ -35,13 +35,13 @@ public class OrderService {
 	@Autowired
 	private ProductRepository productRepo;
 	
-	public Order submitNewOrder(Set<Long> productIds, Long customerId) throws Exception {
+	public Order submitNewOrder(Set<Long> productIds, Long userId) throws Exception {
 		try {
-			User user = userRepo.findOne(customerId);
+			User user = userRepo.findOne(userId);
 			Order order = initializeNewOrder(productIds, user);
 			return repo.save(order);
 		} catch (Exception e) {
-			logger.error("Exception occurred while tring to create new order for customer: " + customerId, e);
+			logger.error("Exception occurred while tring to create new order for user: " + userId, e);
 			throw e;
 		}
 	}
@@ -69,26 +69,26 @@ public class OrderService {
 		}
 	}
 	
-	private Order initializeNewOrder(Set<Long> productIds, Customer customer) {
+	private Order initializeNewOrder(Set<Long> productIds, User user) {
 		Order order = new Order();
 		order.setProducts(convertToProductSet(productRepo.findAll(productIds)));
 		order.setOrdered(LocalDate.now());
 		order.setEstimatedDelivery(LocalDate.now().plusDays(DELIVERY_DAYS));
-		order.setCustomer(customer);
-		order.setInvoiceAmount(calculateOrderTotal(order.getProducts(), customer.getLevel()));
+		order.setUser(user);
+		order.setInvoiceAmount(calculateOrderTotal(order.getProducts(), user.getOrderlevel()));
 		order.setStatus(OrderStatus.ORDERED);
-		addOrderToProducts(order);
+//		addOrderToProducts(order);
 		return order;
 	}
 	
 	//gets the products, for each product, makes sure order is added to product.
 	//makes the relationship fully symmetric
-	private void addOrderToProducts(Order order) {
-		Set<Product> products = order.getProducts();
-		for (Product product : products) {
-			product.getOrders().add(order);
-		}
-	}
+//	private void addOrderToProducts(Order order) {
+//		Set<Product> products = order.getProducts();
+//		for (Product product : products) {
+//			product.getOrders().add(order);
+//		}
+//	}
 	
 	private Set<Product> convertToProductSet(Iterable<Product> iterable) {
 		Set<Product> set = new HashSet<Product>();
@@ -98,7 +98,7 @@ public class OrderService {
 		return set;
 	}
 	
-	private double calculateOrderTotal(Set<Product> products, MembershipLevel level) {
+	private double calculateOrderTotal(Set<Product> products, Level level) {
 		double total = 0;
 		for (Product product : products) {
 			total += product.getPrice();
