@@ -19,7 +19,6 @@ public class ProductService {
 		public Iterable<Product> getProducts() {
 			return repo.findAll();
 		}
-		
 		public Product createProduct(Product product) {
 			return repo.save(product);
 		}
@@ -30,10 +29,9 @@ public class ProductService {
 				oldProduct.setDescription(product.getDescription());
 				oldProduct.setProduct_name(product.getProduct_name());
 				oldProduct.setPrice(product.getPrice());
-				oldProduct.setRest_id(product.getRest_id());
 				return repo.save(oldProduct);
 			} catch (Exception e) {
-				logger.error("Exception occurred while trying to update product:" + id, e);
+				logger.error("Exception occurred while trying to update product: " + id, e);
 				throw new Exception("Unable to update product.");
 			}
 		}
@@ -43,7 +41,7 @@ public class ProductService {
 				repo.delete(id);
 			} catch (Exception e) {
 				logger.error("Exception occurred while trying to delete product: " + id, e);
-				throw new Exception("unable to delete product");
+				throw new Exception("Unable to delete product.");
 			}
 		}
 }
