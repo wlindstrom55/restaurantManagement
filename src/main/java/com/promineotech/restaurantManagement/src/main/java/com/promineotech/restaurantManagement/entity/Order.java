@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,11 +24,11 @@ public class Order {
 	private LocalDate estimatedDelivery;
 	private LocalDate delivered;
 	private double invoiceAmount;
-	private OrderStatus status; // may or may not need this depending on if we decide to implement (e.g.: delivered)
-	private Set<Products> products;
+	private OrderStatus status;
+	private Set<Product> product;
 	
 	@JsonIgnore
-	private Restaurant restaurant;
+	private User user;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -71,6 +71,26 @@ public class Order {
 	public void setInvoiceAmount(double invoiceAmount) {
 		this.invoiceAmount = invoiceAmount;
 	}
+
+	//TODO changed this to one to many. (1 order, many products).
+	@OneToMany(mappedBy = "orders")
+	public Set<Product> getProducts() {
+		return product;
+	}
+	
+	public void setProducts(Set<Product> products) {
+		this.product = products;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "user")
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 	public OrderStatus getStatus() {
 		return status;
@@ -78,24 +98,5 @@ public class Order {
 	
 	public void setStatus(OrderStatus status) {
 		this.status = status;
-	}
-	
-	@ManyToMany(mappedBy = "orders")
-	public Set<Products> getProducts() {
-		return products;
-	}
-	
-	public void setProducts(Set<Products> products) {
-		this.products = products;
-	}
-	
-	@ManyToOne
-	@JoinColumn(name = "rest_Id")
-	public Restaurant getRestaurant() {
-		return restaurant;
-	}
-	
-	public void setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
 	}
 }
