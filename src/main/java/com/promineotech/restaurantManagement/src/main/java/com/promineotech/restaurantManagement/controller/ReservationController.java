@@ -51,7 +51,7 @@ public class ReservationController {
 		public ResponseEntity<Object> deleteReservation(@PathVariable Long id) {
 			try {
 				service.deleteReservation(id);
-				return new ResponseEntity<Object>("Successfully deleted customer with id: " + id, HttpStatus.OK);
+				return new ResponseEntity<Object>("Successfully deleted reservation with id: " + id, HttpStatus.OK);
 			} catch (Exception e) {
 				return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
 			}
