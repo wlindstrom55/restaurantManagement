@@ -19,6 +19,27 @@ public class UserController {
 	@Autowired
 	private UserService service;
 	
+	@Autowired
+	private AuthService authservice;
+	
+	@RequestMapping(value = "/register", method=RequestMethod.POST) //register user endpoint
+	public ResponseEntity<Object> register(@RequestBody Credentials cred) {
+		try {
+			return new ResponseEntity<Object>(authservice.register(cred), HttpStatus.CREATED);
+		} catch (AuthenticationException e) {
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/login", method=RequestMethod.POST) //login endpoint
+	public ResponseEntity<Object> login(@RequestBody Credentials cred) {
+		try {
+			return new ResponseEntity<Object>(authservice.login(cred), HttpStatus.OK);
+		} catch (AuthenticationException e) {
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		}
+	}
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Object> getCustomer(@PathVariable Long id) {
 		try {
