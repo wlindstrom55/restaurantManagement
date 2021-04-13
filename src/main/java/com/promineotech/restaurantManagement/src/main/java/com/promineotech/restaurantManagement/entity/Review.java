@@ -4,18 +4,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.promineotech.restaurantManagement.util.Rating;
 
 @Entity
 public class Review {
 
 	private Long id;
-	private Long rest_id;
-	private Long user_id;
+	private Long restId; 
 	private String reviewDescription;
 	private Rating rating;
+
+	@JsonIgnore
+	private Restaurant restaurant;
 	
+	@JsonIgnore
+	private User user;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,12 +34,12 @@ public class Review {
 		this.id = id;
 	}
 	
-	public Long getRest_id() {
-		return rest_id;
+	public Long getRestId() {
+		return restId;
 	}
 	
-	public void setRest_id(Long rest_id) {
-		this.rest_id = rest_id;
+	public void setRestId(Long restId) {
+		this.restId = restId;
 	}
 	
 	public String getReviewDescription() {
@@ -43,13 +50,13 @@ public class Review {
 		this.reviewDescription = reviewDescription;
 	}
 	
-	public Long getUser_id() {
-		return user_id;
-	}
-	
-	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
-	}
+//	public Long getUserId() {
+//		return userId;
+//	}
+//	
+//	public void setUserId(Long userId) {
+//		this.userId = userId;
+//	}
 	
 	public Rating getRating() {
 		return rating;
@@ -57,5 +64,25 @@ public class Review {
 	
 	public void setRating(Rating rating) {
 		this.rating = rating;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "restaurantId")
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
 	}
 }
