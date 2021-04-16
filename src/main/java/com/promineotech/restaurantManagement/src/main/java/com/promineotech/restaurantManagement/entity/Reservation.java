@@ -1,6 +1,7 @@
 package com.promineotech.restaurantManagement.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -10,17 +11,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.promineotech.restaurantManagement.util.ReservationStatus;
 
 @Entity
 public class Reservation {
 
 		private Long id;
-		private LocalDate reservation_time; //LocalDate only represents a date. Will still need localdateattributeconverter. 
-		//try to find a way to use LocalDateTime, which has time/date
-		private Set<User> reservation_group;
+		private int reservation_size;
+		private ReservationStatus status;
 		
+		@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+		private String reservation_time; 
+		
+		private User user;
 		@JsonIgnore
 		private Restaurant restaurant;
 		
@@ -32,29 +39,44 @@ public class Reservation {
 		public void setId(Long id) {
 			this.id = id;
 		}
-		public LocalDate getReservation_time() {
+		public String getReservation_time() {
 			return reservation_time;
 		}
-		public void setReservation_time(LocalDate reservation_time) {
+		public void setReservation_time(String reservation_time) {
 			this.reservation_time = reservation_time;
 		}
 		
 		//TODO gave this many to many annotation. Not sure about mappedBy
-		@ManyToMany(mappedBy = "reservations")
-		public Set<User> getReservation_group() {
-			return reservation_group;
+		//Changed to OneToMany for better functionality approved with Jeff who will be grading our finals 
+		@OneToMany(mappedBy = "reservations")
+		public User user() {
+			return user;
 		}
-		public void setReservation_group(Set<User> reservation_group) {
-			this.reservation_group = reservation_group;
+		public void setUser(User user) {
+			this.user = user;
 		}
 		//TODO added many to one. 
 		@ManyToOne
-		@JoinColumn(name = "restaurantId")
+		@JoinColumn(name = "restaurant")
 		public Restaurant getRestaurant() {
 			return restaurant;
 		}
 		public void setRestaurant(Restaurant restaurant) {
 			this.restaurant = restaurant;
 		}
-		 
+	
+		public int getReservation_size() {
+			return reservation_size;
+		}
+		public void setReservation_size(int reservation_size) {
+			this.reservation_size = reservation_size;
+		}
+		public ReservationStatus getStatus() {
+			return status;
+		}
+		public void setStatus(ReservationStatus status) {
+			this.status = status;
+		}
+		
+		
 }
