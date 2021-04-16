@@ -1,5 +1,6 @@
 package com.promineotech.restaurantManagement.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,20 +14,11 @@ import com.promineotech.restaurantManagement.entity.Reservation;
 import com.promineotech.restaurantManagement.service.ReservationService;
 
 @RestController
-@RequestMapping("/reservations")
+@RequestMapping("users/{id}/reservations")
 public class ReservationController {
 
 		@Autowired
 		private ReservationService service;
-		
-		@RequestMapping(value="/{id}", method=RequestMethod.GET)
-		public ResponseEntity<Object> getReservation(@PathVariable Long id) {
-			try {
-				return new ResponseEntity<Object>(service.getReservationById(id), HttpStatus.OK);
-			} catch (Exception e) {
-				return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
-			}
-		}
 		
 		@RequestMapping(method=RequestMethod.GET)
 		public ResponseEntity<Object> getReservations() {
@@ -43,7 +35,7 @@ public class ReservationController {
 			try {
 				return new ResponseEntity<Object>(service.updateReservation(reservation, id), HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Object>("Unable to update reservation details.", HttpStatus.BAD_REQUEST);
 			}
 		}
 		
@@ -53,9 +45,8 @@ public class ReservationController {
 				service.deleteReservation(id);
 				return new ResponseEntity<Object>("Successfully deleted reservation with id: " + id, HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Object>(e.getMessage(), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Object>("Unable to delete reservation.", HttpStatus.BAD_REQUEST);
 			}
 		}
-		
-		
 }
+
