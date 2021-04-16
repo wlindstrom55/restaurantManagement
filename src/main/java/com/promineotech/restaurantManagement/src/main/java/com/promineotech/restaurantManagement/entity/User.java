@@ -76,8 +76,7 @@ public class User {
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
-	//TODO put the set of res in, made get/sets, changed below to fit table names
-	@ManyToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_reservation",
 		joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name = "resId", referencedColumnName = "id"))
@@ -88,6 +87,7 @@ public class User {
 	public void setReservations(Set<Reservation> reservations) {
 		this.reservations = reservations;
 	}
+
 
 	//TODO added set of rev, made onetomany relationship w/ rev
 	//what should mappedBy be? can it be the same as set of order?
